@@ -7,6 +7,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonApplication1", "Pytho
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "first-script", "first-script\first-script.pyproj", "{FFE260DC-A2BB-4C40-9DFD-F349FA14B9D3}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "classifying_images_lab", "classifying_images_lab\classifying_images_lab.pyproj", "{00427A52-ED33-41A4-8EFF-3B9DA86E668A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{0581FA5F-8FBD-46C5-BCFD-A3AD2410AF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFE260DC-A2BB-4C40-9DFD-F349FA14B9D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFE260DC-A2BB-4C40-9DFD-F349FA14B9D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00427A52-ED33-41A4-8EFF-3B9DA86E668A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00427A52-ED33-41A4-8EFF-3B9DA86E668A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

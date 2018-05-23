@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{00427a52-ed33-41a4-8eff-3b9da86e668a}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>check_images.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="dognames.txt" />
+    <Content Include="imagenet1000_clsid_to_human.txt" />
+    <Content Include="pet_images\Basenji_00963.jpg" />
+    <Content Include="pet_images\Basenji_00974.jpg" />
+    <Content Include="pet_images\Basset_hound_01034.jpg" />
+    <Content Include="pet_images\Beagle_01125.jpg" />
+    <Content Include="pet_images\Beagle_01141.jpg" />
+    <Content Include="pet_images\Beagle_01170.jpg" />
+    <Content Include="pet_images\Boston_terrier_02259.jpg" />
+    <Content Include="pet_images\Boston_terrier_02285.jpg" />
+    <Content Include="pet_images\Boston_terrier_02303.jpg" />
+    <Content Include="pet_images\Boxer_02426.jpg" />
+    <Content Include="pet_images\cat_01.jpg" />
+    <Content Include="pet_images\cat_02.jpg" />
+    <Content Include="pet_images\cat_07.jpg" />
+    <Content Include="pet_images\Cocker_spaniel_03750.jpg" />
+    <Content Include="pet_images\Collie_03797.jpg" />
+    <Content Include="pet_images\Dalmatian_04017.jpg" />
+    <Content Include="pet_images\Dalmatian_04037.jpg" />
+    <Content Include="pet_images\Dalmatian_04068.jpg" />
+    <Content Include="pet_images\fox_squirrel_01.jpg" />
+    <Content Include="pet_images\gecko_02.jpg" />
+    <Content Include="pet_images\gecko_80.jpg" />
+    <Content Include="pet_images\German_shepherd_dog_04890.jpg" />
+    <Content Include="pet_images\German_shepherd_dog_04931.jpg" />
+    <Content Include="pet_images\German_shorthaired_pointer_04986.jpg" />
+    <Content Include="pet_images\Golden_retriever_05182.jpg" />
+    <Content Include="pet_images\Golden_retriever_05195.jpg" />
+    <Content Include="pet_images\Golden_retriever_05223.jpg" />
+    <Content Include="pet_images\Golden_retriever_05257.jpg" />
+    <Content Include="pet_images\Great_dane_05320.jpg" />
+    <Content Include="pet_images\great_horned_owl_02.jpg" />
+    <Content Include="pet_images\Great_pyrenees_05367.jpg" />
+    <Content Include="pet_images\Great_pyrenees_05435.jpg" />
+    <Content Include="pet_images\Miniature_schnauzer_06884.jpg" />
+    <Content Include="pet_images\polar_bear_04.jpg" />
+    <Content Include="pet_images\Poodle_07927.jpg" />
+    <Content Include="pet_images\Poodle_07956.jpg" />
+    <Content Include="pet_images\Rabbit_002.jpg" />
+    <Content Include="pet_images\Saint_bernard_08010.jpg" />
+    <Content Include="pet_images\Saint_bernard_08036.jpg" />
+    <Content Include="pet_images\skunk_029.jpg" />
+    <Content Include="run_models_batch.sh" />
+    <Content Include="run_models_batch_hints.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="check_images.py" />
+    <Compile Include="check_images_hints.py" />
+    <Compile Include="classifier.py" />
+    <Compile Include="print_functions_for_lab_checks.py" />
+    <Compile Include="test_classifier.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="pet_images" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
