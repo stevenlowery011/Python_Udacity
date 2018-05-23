@@ -1,0 +1,4 @@
+Program is executing. Please wait ...
+Argument 1:  pet_images/ Agument 2:  alexnet argument 3:  dognames.txt
+
+** Total Elapsed Runtime: 00:00:00

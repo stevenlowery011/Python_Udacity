@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 # */AIPND/intropylab-classifying-images/check_images.py
 #                                                                             
-# TODO: 0. Fill in your information in the programming header below
-# PROGRAMMER:
-# DATE CREATED:
-# REVISED DATE:             <=(Date Revised - if any)
+# DONE: 0. Fill in your information in the programming header below
+# PROGRAMMER:   Steven Lowery
+# DATE CREATED: 05/23/2018
+# REVISED DATE: 05/23/2018  <=(Date Revised - if any)
 # REVISED DATE: 05/14/2018 - added import statement that imports the print 
 #                           functions that can be used to check the lab
 # PURPOSE: Check images & report results: read them in, predict their
@@ -32,23 +32,27 @@ from print_functions_for_lab_checks import *
 
 # Main program function defined below
 def main():
-    # TODO: 1. Define start_time to measure total program runtime by
+    # DONE: 1. Define start_time to measure total program runtime by
     # collecting start time
-    start_time = None
+    start_time = time()
+    print("Program is executing. Please wait ...")
     
-    # TODO: 2. Define get_input_args() function to create & retrieve command
+    # DONE: 2. Define get_input_args() function to create & retrieve command
     # line arguments
     in_arg = get_input_args()
+    check_command_line_arguments(in_arg)
     
-    # TODO: 3. Define get_pet_labels() function to create pet image labels by
+    # DONE: 3. Define get_pet_labels() function to create pet image labels by
     # creating a dictionary with key=filename and value=file label to be used
     # to check the accuracy of the classifier function
-    answers_dic = get_pet_labels()
+    answers_dic = get_pet_labels(in_arg.dir)
+    check_creating_pet_image_labels(answers_dic)
 
     # TODO: 4. Define classify_images() function to create the classifier 
     # labels with the classifier function uisng in_arg.arch, comparing the 
     # labels, and creating a dictionary of results (result_dic)
-    result_dic = classify_images()
+    result_dic = classify_images(in_arg.dir, answers_dic, in_arg.arch)
+    check_classifying_images(result_dic)
     
     # TODO: 5. Define adjust_results4_isadog() function to adjust the results
     # dictionary(result_dic) to determine if classifier correctly classified
@@ -65,14 +69,34 @@ def main():
     # incorrect classifications of dogs and breeds if requested.
     print_results()
 
-    # TODO: 1. Define end_time to measure total program runtime
+    # DONE: 1. Define end_time to measure total program runtime
     # by collecting end time
-    end_time = None
+    end_time = time()
 
-    # TODO: 1. Define tot_time to computes overall runtime in
+    # DONE: 1. Define tot_time to computes overall runtime in
     # seconds & prints it in hh:mm:ss format
-    tot_time = None
-    print("\n** Total Elapsed Runtime:", tot_time)
+    tot_time = end_time - start_time
+    #print("\n** Total Elapsed Runtime:", tot_time, " in seconds")
+    
+    if int(tot_time/3600)<10:
+        hh = "0" + str( int(tot_time/3600) )
+    else:
+        hh = str( int(tot_time/3600) )
+    
+    if int((tot_time%3600)/60)<10:
+        mm = "0" + str( int((tot_time%3600)/60) )
+    else:
+        mm = str( int((tot_time%3600)/60) )
+
+    if round((tot_time%3600)%60)<10:
+        ss = "0" + str( round((tot_time%3600)%60) )
+    else: 
+        ss = str( round((tot_time%3600)%60) )
+
+    print("\n** Total Elapsed Runtime:", "{}:{}:{}".format(hh,mm,ss))
+    #print("\n** Total Elapsed Runtime:", str( int(tot_time/3600) ) + ":" + 
+    #      str( int((tot_time%3600)/60) ) + ":" + 
+    #      str( round((tot_time%3600)%60) ) )
 
 
 
@@ -98,10 +122,24 @@ def get_input_args():
     Returns:
      parse_args() -data structure that stores the command line arguments object  
     """
-    pass
+    # Creates parse
+    parser = argparse.ArgumentParser()
+
+    # Creates 3 command line arguments args.dir for path to images files,
+    # args.arch which CNN model to use for classification, args.labels path to
+    # text file with names of dogs.
+    parser.add_argument('--dir', type=str, default='pet_images/', 
+                        help='path to folder of images')
+    parser.add_argument('--arch', type=str, default = 'vgg',
+                        help='chosen model')
+    parser.add_argument('--dogfile', type=str, default = 'dognames.txt',
+                        help='text file that has dognames')
+
+    # returns parsed argument collection
+    return parser.parse_args()
 
 
-def get_pet_labels():
+def get_pet_labels(image_dir):
     """
     Creates a dictionary of pet labels based upon the filenames of the image 
     files. Reads in pet filenames and extracts the pet image labels from the 
@@ -114,10 +152,57 @@ def get_pet_labels():
      petlabels_dic - Dictionary storing image filename (as key) and Pet Image
                      Labels (as value)  
     """
-    pass
+    # Creates list of files in directory
+    in_files = listdir(image_dir)
+    
+    # Processes each of the files to create a dictionary where the key
+    # is the filename and the value is the picture label (below).
+ 
+    # Creates empty dictionary for the labels
+    petlabels_dic = dict()
+   
+    # Processes through each file in the directory, extracting only the words
+    # of the file that contain the pet image label
+    for idx in range(0, len(in_files), 1):
+       
+       # Skips file if starts with . (like .DS_Store of Mac OSX) because it 
+       # isn't an pet image file
+       if in_files[idx][0] != ".":
+           
+           # Uses split to extract words of filename into list image_name
+           image_name = in_files[idx].split("_")
+
+           # Creates temporary label variable to hold pet label name extracted 
+           pet_label = ""
+            
+           # Process each of the character strings(words) split by '_' in
+           # list image_name by processing each word - only adding to pet_label
+           # if word is all letters - then process by putting blanks between
+           # these words and putting them in all lowercase letters
+           for word in image_name:
+
+               # Only add to pet_label if word is all letters add blank at end
+               if word.isalpha():
+                   pet_label += word.lower() + " "
+           
+           # strips off trailing whitespace
+           pet_label = pet_label.strip() 
+
+           # If filename doesn't already exist in dictionary add it and it's
+           # pet label - otherwise print an error message because indicates 
+           # duplicate files (filenames)
+           if in_files[idx] not in petlabels_dic:
+              petlabels_dic[in_files[idx]] = pet_label
+              
+           else:
+               print("Warning: Duplicate files exist in directory", 
+                     in_files[idx])
+ 
+    # returns dictionary of labels
+    return(petlabels_dic)
 
 
-def classify_images():
+def classify_images(images_dir, petlabel_dic, model):
     """
     Creates classifier labels with classifier function, compares labels, and 
     creates a dictionary containing both labels and comparison of them to be
@@ -142,7 +227,58 @@ def classify_images():
                     idx 2 = 1/0 (int)   where 1 = match between pet image and 
                     classifer labels and 0 = no match between labels
     """
-    pass
+    # Creates dictionary that will have all the results key = filename
+    # value = list [Pet Label, Classifier Label, Match(1=yes,0=no)]
+    results_dic = dict()
+
+    # Process all files in the petlabels_dic - use images_dir to give fullpath
+    for key in petlabel_dic:
+       
+       #  Runs classifier function to classify the images classifier function 
+       # inputs: path + filename  and  model, returns model_label 
+       # as classifier label
+       model_label = classifier(images_dir+key, model)
+
+       # Processes the results so they can be compared with pet image labels
+       # set labels to lowercase (lower) and stripping off whitespace(strip)
+       model_label = model_label.lower()
+       model_label = model_label.strip()
+       
+       # defines truth as pet image label and trys to find it using find() 
+       # string function to find it within classifier label(model_label).
+       truth = petlabel_dic[key]
+       found = model_label.find(truth)
+       
+       # If found (0 or greater) then make sure true answer wasn't found within
+       # another word and thus not really found, if truely found then add to 
+       # results dictionary and set match=1(yes) otherwise as match=0(no)
+       if found >= 0:
+           if ( (found == 0 and len(truth)==len(model_label)) or
+                (  ( (found == 0) or (model_label[found - 1] == " ") )  and
+                   ( (found + len(truth) == len(model_label)) or   
+                      (model_label[found + len(truth): found+len(truth)+1] in 
+                     (","," ") ) 
+                   )      
+                )
+              ):            
+               # Found pet label (truth) as stand-alone word(not within a word)
+               # within classifier label (model_label) - is a match 
+               if key not in results_dic:
+                   results_dic[key] = [truth, model_label, 1]
+           
+           # Found within a word that composes the classifier label,  
+           # like: 'fox' being found within 'foxhound' - not a match  
+           else:
+               if key not in results_dic:
+                   results_dic[key] = [truth, model_label, 0]
+              
+       # if not pet label isn't found within classifier label - not a match
+       else:
+           if key not in results_dic:
+               results_dic[key] = [truth, model_label, 0]
+               
+    # Return results dictionary
+    return(results_dic)
 
 
 def adjust_results4_isadog():
