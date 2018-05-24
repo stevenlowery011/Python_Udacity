@@ -9,6 +9,6 @@
 #
 # Usage: sh run_models_batch.sh    -- will run program from commandline
 #  
-stdbuf -oL python check_images.py --dir pet_images/ --arch resnet  --dogfile dognames.txt > resnet.txt
-stdbuf -oL python check_images.py --dir pet_images/ --arch alexnet --dogfile dognames.txt > alexnet.txt
-stdbuf -oL python check_images.py --dir pet_images/ --arch vgg  --dogfile dognames.txt > vgg.txt
+python check_images.py --dir pet_images/ --arch resnet  --dogfile dognames.txt > resnet.txt
+python check_images.py --dir pet_images/ --arch alexnet --dogfile dognames.txt > alexnet.txt
+python check_images.py --dir pet_images/ --arch vgg  --dogfile dognames.txt > vgg.txt
